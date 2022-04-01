@@ -16,7 +16,7 @@ namespace Billing.Repositories
         }
         public List<Customer> GetCustomers()
         {
-            return _context.Customers.ToList();
+            return _context.Customers.Include(include => include.IdTypeCustomerNavigation).ToList();
         }
 
         public Customer GetCustomerByID(int costumerId)

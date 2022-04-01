@@ -8,5 +8,7 @@ namespace Billing.Applications.Contracts
         bool InsertCustomer(CustomerDTO customerDTO);
         bool UpdateCustomer(CustomerDTO customerDTO);
         List<CustomerDTO> GetCustomer();
+        bool DeleteCustomer(int customerID);
+        List<TypeCustomerDTO> GetTypeCustomer();
     }
 }

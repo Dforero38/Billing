@@ -8,5 +8,7 @@ namespace Billing.Domains.Services.Contracts
         bool InsertCustomer(Customer customer);
         bool UpdateCustomer(Customer customer);
         List<Customer> GetCustomer();
+        bool DeleteCustomer(int customerID);
+        List<TypeCustomer> GetTypeCustomer();
     }
 }

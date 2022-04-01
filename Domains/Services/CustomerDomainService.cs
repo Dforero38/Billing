@@ -5,12 +5,17 @@ using System.Collections.Generic;
 
 namespace Billing.Domains.Services
 {
-    public class CustomerDomainService : ICustomerDomainService
+    public class CustomerDomainService : ICustomerDomainService 
     {
         private readonly ICustomerRepository _customerRepository;
-        public CustomerDomainService(ICustomerRepository customerRepository)
+        private readonly ITypeCustomerRepository _typecustomerRepository;
+
+        public CustomerDomainService(ICustomerRepository customerRepository,
+                                     ITypeCustomerRepository typecustomerRepository)
         {
             _customerRepository = customerRepository;
+            _typecustomerRepository = typecustomerRepository;
+
         }
         public bool InsertCustomer(Customer customer)
         {
@@ -47,6 +52,31 @@ namespace Billing.Domains.Services
             catch
             {
                 return new List<Customer>() ;
+            }
+        }
+
+        public bool DeleteCustomer ( int customerID)
+        {
+            try
+            {
+                _customerRepository.DeleteCustomer(customerID);
+                return true;
+            }
+            catch
+            {
+
+                return false ;
+            }
+        }
+        public List<TypeCustomer> GetTypeCustomer()
+        {
+            try
+            {
+                return _typecustomerRepository.GetTypeCustomers();
+            }
+            catch
+            {
+                return new List<TypeCustomer>();
             }
         }
     }

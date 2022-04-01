@@ -58,5 +58,34 @@ namespace Billing.Applications
                 throw exception;
             }
         }
+
+        public bool DeleteCustomer(int customerID)
+        {
+            try
+            {
+                var result = _customerDomainService.DeleteCustomer(customerID);
+                return result;
+            }
+            catch (System.Exception exception)
+            {
+
+                throw exception;
+            }
+        }
+        public List<TypeCustomerDTO> GetTypeCustomer()
+        {
+            try
+            {
+                var result = _customerDomainService.GetTypeCustomer();
+                List<TypeCustomerDTO> typecustomer = _mapper.Map<List<TypeCustomer>, List<TypeCustomerDTO>>(result);
+                return typecustomer;
+            }
+            catch (System.Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+
     }
 }

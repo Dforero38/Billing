@@ -39,6 +39,28 @@ namespace Billing
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerDomainService, CustomerDomainService>();
             services.AddScoped<ICustomerAppService, CustomerAppService>();
+            services.AddScoped<ITypeCustomerRepository, TypeCustomerRepository>();
+
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductDomainService, ProductDomainService>();
+            services.AddScoped<IProductAppService, ProductAppService>();
+            services.AddScoped<IMarkRepository, MarkRepository>();
+
+            services.AddScoped<IMovementBillRepository, MovementBillRepository>();
+            services.AddScoped<IMovementBillDomainService, MovementBillDomainService>();
+            services.AddScoped<IMovementBillAppService, MovementBillAppService>();
+
+            services.AddScoped<IMovementProductRepository, MovementProductRepository>();
+            services.AddScoped<IMovementProductDomainService, MovementProductDomainService>();
+            services.AddScoped<IMovementProductAppService, MovementProductAppService>();
+
+            services.AddScoped<IResidueRepository, ResidueRepository>();
+            services.AddScoped<IResidueDomainService, ResidueDomainService>();
+
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentDomainService, PaymentDomainService>();
+            services.AddScoped<IPaymentAppService, PaymentAppService>();
 
             services.AddDbContext<BillingContext>(Options => Options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
@@ -51,6 +73,11 @@ namespace Billing
             var mapperConfig = new MapperConfiguration(m =>
             {
                 m.AddProfile(new CustomerMapperProfile());
+                m.AddProfile(new ProductMapperProfile());
+                m.AddProfile(new MovementBillMapperProfile());
+                m.AddProfile(new MovementProductMapperProfile());
+                m.AddProfile(new PaymentMapperProfile());
+
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);

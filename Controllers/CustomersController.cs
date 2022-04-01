@@ -11,7 +11,7 @@ namespace Billing.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
-    {    
+    {
         private readonly ICustomerAppService _customerAppService;
         public CustomersController(ICustomerAppService customerAppService)
         {
@@ -37,6 +37,20 @@ namespace Billing.Controllers
         public List<CustomerDTO> GetCustomer()
         {
             return _customerAppService.GetCustomer();
+        }
+
+        [HttpDelete]
+        [Route(nameof(CustomersController.DeleteCustomer))]
+        public bool DeleteCustomer(int id)
+        {
+            return _customerAppService.DeleteCustomer(id);
+        }
+
+        [HttpGet]
+        [Route(nameof(CustomersController.GetTypeCustomer))]
+        public List<TypeCustomerDTO> GetTypeCustomer()
+        {
+            return _customerAppService.GetTypeCustomer();
         }
     }
 }

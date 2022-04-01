@@ -17,7 +17,6 @@ namespace Billing.Domain.Entity
         public int IdMark { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-
         public virtual Mark IdMarkNavigation { get; set; }
         public virtual ICollection<MovementProduct> MovementProducts { get; set; }
         public virtual ICollection<Residue> Residues { get; set; }
