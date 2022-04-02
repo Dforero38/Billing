@@ -38,11 +38,11 @@ namespace Billing.Domains.Services
             }
         }
 
-        public List<MovementProduct> GetMovementProduct()
+        public List<MovementProduct> GetMovementProduct(int idMovementBill)
         {
             try
             {
-                return _movementProductRepository.GetMovementProducts();
+                return _movementProductRepository.GetMovementProducts(idMovementBill);
             }
             catch
             {
@@ -57,7 +57,9 @@ namespace Billing.Domains.Services
             try
             {
                 _movementProductRepository.DeleteMovementProduct(movementProductID);
+
                 return true;
+
             }
             catch
             {
@@ -65,5 +67,22 @@ namespace Billing.Domains.Services
                 return false;
             }
         }
+
+        public MovementProduct GetMovementProductByID(int movementProductID)
+        {
+            try
+            {
+                return _movementProductRepository.GetMovementProductByID(movementProductID);
+
+                
+
+            }
+            catch
+            {
+
+                return new MovementProduct();
+            }
+        }
+
     }
 }

@@ -25,5 +25,19 @@ namespace Billing.Domains.Services
                 throw exception;
             }
         }
+
+        public bool UpdateResidue(int product, int quantity)
+        {
+            try
+            {
+                _residueRepository.UpdateResidue(product, quantity);
+                return true;
+            }
+            catch (System.Exception exception)
+            {
+
+                throw exception;
+            }
+        }
     }
 }

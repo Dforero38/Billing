@@ -26,10 +26,20 @@ namespace Billing.Repositories
                 _context.Residues.Add(residue);
             }else
             {
-                findIdProduct.Stok = findIdProduct.Stok + quantity;
+                findIdProduct.Stok = findIdProduct.Stok - quantity;
                 _context.Entry(findIdProduct).State = EntityState.Modified;
             }           
             _context.SaveChanges();
-        }      
+        }
+        public void UpdateResidue(int product, int quantity)
+        {
+            var findIdProduct = _context.Residues.FirstOrDefault(first => first.IdProduct.Equals(product));
+            if (findIdProduct != null)
+            {
+                findIdProduct.Stok = findIdProduct.Stok + quantity;
+                _context.Entry(findIdProduct).State = EntityState.Modified;
+            }            
+            _context.SaveChanges();
+        }
     }
 }

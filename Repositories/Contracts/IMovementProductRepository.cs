@@ -5,7 +5,7 @@ namespace Billing.Repositories.Contracts
 {
     public interface IMovementProductRepository
     {
-        List<MovementProduct> GetMovementProducts();
+        List<MovementProduct> GetMovementProducts(int idMovementBill);
         MovementProduct GetMovementProductByID(int movementProductId);
         void InsertMovementProduct(MovementProduct movementProduct);
         void DeleteMovementProduct(int movementProductID);

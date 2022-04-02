@@ -14,13 +14,13 @@ namespace Billing.Repositories
         {
             _context = context;
         }
-        public List<MovementProduct> GetMovementProducts()
+        public List<MovementProduct> GetMovementProducts(int idMovementBill)
         {
-            return _context.MovementProducts.Include(include => include.IdProduct).ToList();
+            return _context.MovementProducts.Include(include => include.IdProductNavigation).Where(where => where.IdMovementBill.Equals(idMovementBill)).ToList();
         }
         public MovementProduct GetMovementProductByID(int movementProductId)
         {
-            return _context.MovementProducts.Find(movementProductId);
+            return _context.MovementProducts.Where(where => where.Id.Equals(movementProductId)).FirstOrDefault();
         }
         public void InsertMovementProduct (MovementProduct movementProduct)
         {

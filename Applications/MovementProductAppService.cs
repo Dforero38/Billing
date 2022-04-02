@@ -21,11 +21,11 @@ namespace Billing.Applications
             _mapper = mapper;
             
         }
-        public bool InsertMovementProduct(MovementProductDTO movementProductDTO)
+        public bool InsertMovementProduct(CreateMovementProductDTO movementProductDTO)
         {
             try
             {
-                MovementProduct movementProductMap = _mapper.Map<MovementProductDTO, MovementProduct>(movementProductDTO);
+                MovementProduct movementProductMap = _mapper.Map<CreateMovementProductDTO, MovementProduct>(movementProductDTO);
                 var result = _movementProductDomainService.InsertMovementProduct(movementProductMap);
                 if (result)
                 {
@@ -40,12 +40,22 @@ namespace Billing.Applications
             }
         }
 
-        public bool UpdateMovementProduct(MovementProductDTO movementProductDTO)
+        public bool UpdateMovementProduct(CreateMovementProductDTO movementProductDTO)
         {
             try
             {
-                MovementProduct movementProductMap = _mapper.Map<MovementProductDTO, MovementProduct>(movementProductDTO);
-                var result = _movementProductDomainService.UpdateMovementProduct(movementProductMap);
+                var infoMovementProduct = _movementProductDomainService.GetMovementProductByID(movementProductDTO.Id);
+                var result = _residueDomainService.UpdateResidue(infoMovementProduct.IdProduct, infoMovementProduct.Quantity);
+                if (result)
+                {
+                    MovementProduct movementProductMap = _mapper.Map<CreateMovementProductDTO, MovementProduct>(movementProductDTO);
+                    var result1 = _movementProductDomainService.UpdateMovementProduct(movementProductMap);
+                    if (result1)
+                    {
+                        var result2 = _residueDomainService.InsertResidue(movementProductDTO.IdProduct, movementProductDTO.Quantity);
+                        result = result2;
+                    }
+                }                  
                 return result;
             }
             catch (System.Exception exception)
@@ -54,11 +64,11 @@ namespace Billing.Applications
             }
         }
 
-        public List<MovementProductDTO> GetMovementProduct()
+        public List<MovementProductDTO> GetMovementProduct(int idMovementBill)
         {
             try
             {
-                var result = _movementProductDomainService.GetMovementProduct();
+                var result = _movementProductDomainService.GetMovementProduct(idMovementBill);
                 List<MovementProductDTO> movementProduct = _mapper.Map<List<MovementProduct>, List<MovementProductDTO>>(result);
                 return movementProduct;
             }
@@ -72,8 +82,13 @@ namespace Billing.Applications
         {
             try
             {
-                var result = _movementProductDomainService.DeleteMovementProduct(movementProductID);
-                return result;
+                var infoMovementProduct = _movementProductDomainService.GetMovementProductByID(movementProductID);
+                var result1 = _residueDomainService.UpdateResidue(infoMovementProduct.IdProduct, infoMovementProduct.Quantity);
+                if (result1) { 
+                    var result = _movementProductDomainService.DeleteMovementProduct(movementProductID);
+                    return result;
+                }
+                return result1;
             }
             catch (System.Exception exception)
             {

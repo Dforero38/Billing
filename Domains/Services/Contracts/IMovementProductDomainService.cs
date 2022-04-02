@@ -7,8 +7,9 @@ namespace Billing.Domains.Services.Contracts
     {
         bool InsertMovementProduct(MovementProduct movementProduct);
         bool UpdateMovementProduct(MovementProduct movementProduct);
-        List<MovementProduct> GetMovementProduct();
+        List<MovementProduct> GetMovementProduct(int idMovementBill);
         bool DeleteMovementProduct(int movementProductID);
+        MovementProduct GetMovementProductByID(int movementProductID);
 
     }
 }

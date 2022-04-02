@@ -17,23 +17,23 @@ namespace Billing.Controllers
 
         [HttpPost]
         [Route(nameof(MovementProductController.InsertMovementProduct))]
-        public bool InsertMovementProduct (MovementProductDTO movementProductDTO)
+        public bool InsertMovementProduct (CreateMovementProductDTO movementProductDTO)
         {
             return _movementProductAppService.InsertMovementProduct(movementProductDTO);
         }
 
         [HttpPut]
         [Route(nameof(MovementProductController.UpdateMovementProduct))]
-        public bool UpdateMovementProduct(MovementProductDTO movementProductDTO)
+        public bool UpdateMovementProduct(CreateMovementProductDTO movementProductDTO)
         {
             return _movementProductAppService.UpdateMovementProduct(movementProductDTO);
         }
 
         [HttpGet]
         [Route(nameof(MovementProductController.GetMovementProduct))]
-        public List<MovementProductDTO> GetMovementProduct()
+        public List<MovementProductDTO> GetMovementProduct(int idMovementBill)
         {
-            return _movementProductAppService.GetMovementProduct();
+            return _movementProductAppService.GetMovementProduct(idMovementBill);
         }
 
         [HttpDelete]

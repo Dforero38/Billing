@@ -5,9 +5,9 @@ namespace Billing.Applications.Contracts
 {
     public interface IMovementProductAppService
     {
-        bool InsertMovementProduct(MovementProductDTO movementProductDTO);
-        bool UpdateMovementProduct(MovementProductDTO movementProductDTO);
-        List<MovementProductDTO> GetMovementProduct();
+        bool InsertMovementProduct(CreateMovementProductDTO movementProductDTO);
+        bool UpdateMovementProduct(CreateMovementProductDTO movementProductDTO);
+        List<MovementProductDTO> GetMovementProduct(int idMovementBill);
         bool DeleteMovementProduct(int movementProductID);
 
 
