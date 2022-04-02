@@ -12,13 +12,15 @@ namespace Billing.Applications
         private readonly IMovementProductDomainService _movementProductDomainService;
         private readonly IMapper _mapper;
         private readonly IResidueDomainService _residueDomainService;
+        private readonly IMovementBillDomainService _movementBillDomainService;
 
         public MovementProductAppService(IMovementProductDomainService movementProductDomainService, 
-                                         IMapper mapper, IResidueDomainService residueDomainService)
+                                         IMapper mapper, IResidueDomainService residueDomainService, IMovementBillDomainService movementBillDomainService)
         {
             _movementProductDomainService = movementProductDomainService;
             _residueDomainService = residueDomainService;
             _mapper = mapper;
+            _movementBillDomainService = movementBillDomainService;
             
         }
         public bool InsertMovementProduct(CreateMovementProductDTO movementProductDTO)
@@ -30,8 +32,13 @@ namespace Billing.Applications
                 if (result)
                 {
                     var result1 = _residueDomainService.InsertResidue(movementProductDTO.IdProduct, movementProductDTO.Quantity);
-                    result = result1;
+                    if (result1)
+                    {
+                        var result2 = _movementBillDomainService.SumTotalMovementBill(movementProductDTO.IdMovementBill, (int)movementProductDTO.TotalValue);
+                        result = result2;
+                    }
                 }
+
                 return result;
             }
             catch (System.Exception exception)
@@ -50,10 +57,15 @@ namespace Billing.Applications
                 {
                     MovementProduct movementProductMap = _mapper.Map<CreateMovementProductDTO, MovementProduct>(movementProductDTO);
                     var result1 = _movementProductDomainService.UpdateMovementProduct(movementProductMap);
-                    if (result1)
+                    var result2 = _movementBillDomainService.RestTotalMovementBill(movementProductDTO.IdMovementBill, (int)movementProductDTO.TotalValue);
+                       if (result2 && result1)
                     {
-                        var result2 = _residueDomainService.InsertResidue(movementProductDTO.IdProduct, movementProductDTO.Quantity);
-                        result = result2;
+                        var result3 = _residueDomainService.InsertResidue(movementProductDTO.IdProduct, movementProductDTO.Quantity);
+                        var result4 = _movementBillDomainService.SumTotalMovementBill(movementProductDTO.IdMovementBill, (int)movementProductDTO.TotalValue);
+                        if (result3 && result4)
+                        {
+                            result = result4;
+                        }                                      
                     }
                 }                  
                 return result;
@@ -83,6 +95,7 @@ namespace Billing.Applications
             try
             {
                 var infoMovementProduct = _movementProductDomainService.GetMovementProductByID(movementProductID);
+                var result4 = _movementBillDomainService.SumTotalMovementBill(infoMovementProduct.IdMovementBill, (int)infoMovementProduct.TotalValue);
                 var result1 = _residueDomainService.UpdateResidue(infoMovementProduct.IdProduct, infoMovementProduct.Quantity);
                 if (result1) { 
                     var result = _movementProductDomainService.DeleteMovementProduct(movementProductID);

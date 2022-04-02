@@ -8,5 +8,8 @@ namespace Billing.Domains.Services.Contracts
         bool InsertMovementBill(MovementBill movementBill);
         MovementBill ConsultMovementBillByNumber();
         List<MovementBill> ConsultMovementBills();
+        bool SumTotalMovementBill(int id, int value);
+        bool RestTotalMovementBill(int id, int value);
+        MovementBill GetMovementBillByID(int movementBillID);
     }
 }

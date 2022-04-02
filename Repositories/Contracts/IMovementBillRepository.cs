@@ -8,5 +8,8 @@ namespace Billing.Repositories.Contracts
         MovementBill InsertMovementBill(MovementBill movementBill);
         MovementBill ConsultMovementBillByNumber();
         List<MovementBill> ConsultMovementBills();
+        void SumTotalMovementBill(int id, int value);
+        void RestTotalMovementBill(int id, int value);
+        MovementBill GetMovementBillByID(int movementBillId);
     }
 }

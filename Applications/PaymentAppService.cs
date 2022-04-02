@@ -24,6 +24,8 @@ namespace Billing.Applications
         {
             try
             {
+                var bill = _movementBillDomainService.GetMovementBillByID(paymentDTO.idBill);
+                paymentDTO.IdCustomer = bill.IdCustomer;
                 Payment paymentMap = _mapper.Map<PaymentDTO, Payment>(paymentDTO);
                 var result = _collectionDomainservice.InsertPayment(paymentMap);
                 if (result)

@@ -52,5 +52,44 @@ namespace Billing.Domains.Services
             }
         }
 
+        public bool SumTotalMovementBill(int id, int value)
+        {
+            try
+            {
+                _movementBillRepository.SumTotalMovementBill(id,value);
+                return true;
+            }
+            catch (System.Exception)
+            {
+
+                return false;
+            }
+        }
+        public bool RestTotalMovementBill(int id, int value)
+        {
+            try
+            {
+                _movementBillRepository.RestTotalMovementBill(id, value);
+                return true;
+            }
+            catch (System.Exception)
+            {
+
+                return false;
+            }
+        }
+        public MovementBill GetMovementBillByID(int movementBillID)
+        {
+            try
+            {
+                return _movementBillRepository.GetMovementBillByID(movementBillID);
+            }
+            catch
+            {
+                return new MovementBill();
+            }
+        }
+
+
     }
 }

@@ -20,6 +20,7 @@ namespace Billing.Repositories
         public void InsertPayment(Payment payment)
         {
             _context.Payments.Add(payment);
+            _context.SaveChanges();
         }
 
         public void SavePayment()
